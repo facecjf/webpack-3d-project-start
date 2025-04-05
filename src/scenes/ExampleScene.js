@@ -176,45 +176,6 @@ export class ExampleScene {
       dimensions: new THREE.Vector3(1.5, 2.5, 1.5),
       mass: 1
     });
-    
-    // Create some random boxes
-    for (let i = 0; i < 10; i++) {
-      const size = 0.5 + Math.random() * 1.0;
-      const boxGeom = new THREE.BoxGeometry(size, size, size);
-      const boxMat = new THREE.MeshStandardMaterial({
-        color: Math.random() * 0xffffff,
-        roughness: 0.4 + Math.random() * 0.5,
-        metalness: Math.random() * 0.5
-      });
-      
-      const box = new THREE.Mesh(boxGeom, boxMat);
-      const posX = (Math.random() * 20) - 10;
-      const posY = 0.5 + (Math.random() * 5);
-      const posZ = (Math.random() * 20) - 10;
-      
-      box.position.set(posX, posY, posZ);
-      box.rotation.set(
-        Math.random() * Math.PI,
-        Math.random() * Math.PI,
-        Math.random() * Math.PI
-      );
-      
-      box.castShadow = true;
-      box.receiveShadow = true;
-      
-      this.threeScene.add(box);
-      this.objects.push(box);
-      
-      // Create a physics body for the box
-      const boxBody = this.physicsSystem.createBody({
-        position: new THREE.Vector3(posX, posY, posZ),
-        dimensions: new THREE.Vector3(size, size, size),
-        mass: size
-      });
-      
-      // Store reference to the body
-      box.userData.physicsBody = boxBody;
-    }
   }
   
   /**
