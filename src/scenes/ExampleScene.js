@@ -184,7 +184,7 @@ export class ExampleScene {
     }
     
     // Rotate the center cube
-    this.centerCube.rotation.y += deltaTime * 0.5;
+    //this.centerCube.rotation.y += deltaTime * 0.5;
     // this.centerCube.rotation.x += deltaTime * 0.2;
     
     // Update physics objects to match their Three.js counterparts
