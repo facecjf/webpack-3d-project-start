@@ -134,48 +134,6 @@ export class ExampleScene {
       dimensions: new THREE.Vector3(2, 2, 2),
       mass: 1
     });
-    
-    // Create a sphere
-    const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
-    const sphereMaterial = new THREE.MeshStandardMaterial({
-      color: 0x00ff00,
-      roughness: 0.3,
-      metalness: 0.5
-    });
-    this.sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-    this.sphere.position.set(4, 1, 4);
-    this.sphere.castShadow = true;
-    this.sphere.receiveShadow = true;
-    this.threeScene.add(this.sphere);
-    this.objects.push(this.sphere);
-    
-    // Create a physics body for the sphere
-    this.sphereBody = this.physicsSystem.createBody({
-      position: new THREE.Vector3(4, 1, 4),
-      dimensions: new THREE.Vector3(2, 2, 2),
-      mass: 1
-    });
-    
-    // Create a cylinder
-    const cylinderGeometry = new THREE.CylinderGeometry(0.75, 0.75, 2.5, 32);
-    const cylinderMaterial = new THREE.MeshStandardMaterial({
-      color: 0x0000ff,
-      roughness: 0.4,
-      metalness: 0.3
-    });
-    this.cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
-    this.cylinder.position.set(-4, 1.25, -4);
-    this.cylinder.castShadow = true;
-    this.cylinder.receiveShadow = true;
-    this.threeScene.add(this.cylinder);
-    this.objects.push(this.cylinder);
-    
-    // Create a physics body for the cylinder
-    this.cylinderBody = this.physicsSystem.createBody({
-      position: new THREE.Vector3(-4, 1.25, -4),
-      dimensions: new THREE.Vector3(1.5, 2.5, 1.5),
-      mass: 1
-    });
   }
   
   /**
@@ -225,38 +183,12 @@ export class ExampleScene {
       this.controls.update();
     }
     
-    // Make the point light orbit
-    const lightX = Math.sin(elapsedTime * 0.5) * 8;
-    const lightZ = Math.cos(elapsedTime * 0.5) * 8;
-    this.lights[2].position.set(lightX, 5, lightZ);
-    
     // Rotate the center cube
     this.centerCube.rotation.y += deltaTime * 0.5;
-    this.centerCube.rotation.x += deltaTime * 0.2;
-    
-    // Bounce the sphere
-    this.sphere.position.y = 1 + Math.abs(Math.sin(elapsedTime * 2)) * 2;
-    this.sphereBody.position.copy(this.sphere.position);
+    // this.centerCube.rotation.x += deltaTime * 0.2;
     
     // Update physics objects to match their Three.js counterparts
     this.centerCubeBody.position.copy(this.centerCube.position);
-    
-    // Rotate the cylinder
-    this.cylinder.rotation.y += deltaTime;
-    this.cylinderBody.position.copy(this.cylinder.position);
-    
-    // Apply a force to random objects occasionally
-    if (Math.random() < 0.01) {
-      const randomObj = this.objects[Math.floor(Math.random() * this.objects.length)];
-      if (randomObj.userData.physicsBody) {
-        const force = new THREE.Vector3(
-          (Math.random() - 0.5) * 10,
-          Math.random() * 15,
-          (Math.random() - 0.5) * 10
-        );
-        randomObj.userData.physicsBody.applyImpulse(force);
-      }
-    }
     
     // Update object positions based on physics
     for (const object of this.objects) {
